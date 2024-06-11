@@ -4,11 +4,10 @@ pragma solidity ^0.8.13;
 contract Counter {
     uint256 public number;
 
-    function setNumber(uint256 newNumber) public {
-        number = newNumber;
-    }
+    error CustomError(uint256 amount);
 
-    function increment() public {
-        number++;
+    function increment() pure public {
+        uint256 amount = 777;
+        revert CustomError(amount);
     }
 }

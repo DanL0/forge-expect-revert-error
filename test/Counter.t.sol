@@ -9,16 +9,16 @@ contract CounterTest is Test {
 
     function setUp() public {
         counter = new Counter();
-        counter.setNumber(0);
     }
 
-    function test_Increment() public {
+    function test_expect_revert_bytes_4_selector_only_partial_match() public {
+        vm.expectRevert(Counter.CustomError.selector);
         counter.increment();
-        assertEq(counter.number(), 1);
     }
 
-    function testFuzz_SetNumber(uint256 x) public {
-        counter.setNumber(x);
-        assertEq(counter.number(), x);
+    function test_expect_revert_bytes_memory_full_match() public {
+        uint256 amount = 777;
+        vm.expectRevert(abi.encodePacked(Counter.CustomError.selector, amount));
+        counter.increment();
     }
 }
